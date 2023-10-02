@@ -31,7 +31,8 @@ jobs:
         run: npx serverless config credentials --provider aws --key ${{ secrets.AWS_ACCESS_KEY_ID }} --secret ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: serverless install 
         uses: serverless/github-action@v3.1
-        run: plugin install -n serverless-python-requirements
+        with:
+          args: plugin install -n serverless-python-requirements
       - name: serverless deploy
         uses: serverless/github-action@v3.1
         with:
