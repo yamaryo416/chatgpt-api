@@ -33,7 +33,7 @@ jobs:
         run: npm i -g serverless
       - name: serverless deploy
         run: serverless deploy
-      # - name: serverless install 
+      # - name: serverless install
       #   uses: serverless/github-action@v3.1
       #   with:
       #     args: plugin install -n serverless-python-requirements
@@ -41,11 +41,3 @@ jobs:
       #   uses: serverless/github-action@v3.1
       #   with:
       #     args: deploy
-
-
-
-    - name: serverless deploy
-        uses: serverless/github-action@v3.2
-        with:
-          args: -c "serverless plugin install --name serverless-python-requirements && serverless deploy"
-          entrypoint: /bin/sh
