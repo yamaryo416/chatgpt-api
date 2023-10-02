@@ -1,0 +1,53 @@
+service: chatgpt-api
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: python3.9
+  stage: ${opt:stage, 'prod'}
+  region: ${opt:region, "ap-northeast-1"}
+  timeout: 180
+  layers:
+    - Ref: PythonRequirementsLambdaLayer
+
+functions:
+  get_text:
+    # 実際に呼び出すlambda関数
+    handler: handler.chatgpt
+    # 関数URLを付与
+    url:
+      # フロント側でのIAM認証がうまくいかないため、一旦認証を外す
+      authorizer: aws_iam
+      cors:
+        allowCredentials: true
+        allowedHeaders:
+          - Content-Type
+          - Authorization
+        allowedMethods:
+          - POST
+        allowedOrigins:
+          - http://localhost:3000
+          - http://localhost:4000
+          - http://localhost:5000
+          - https://geareach.jp
+          - https://dev.geareach.jp
+          - https://user-demo.geareach.jp
+          - https://agent.geareach.jp
+          - https://agent.dev.geareach.jp
+          - https://agent.user-demo.geareach.jp
+          - https://admin.geareach.jp
+          - https://admin.dev.geareach.jp
+          - https://admin.user-demo.geareach.jp
+        exposedResponseHeaders:
+          - Special-Response-Header
+        maxAge: 6000
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    zip: true
+    # slim: true
+    # 依存ライブラリのレイヤー化
+    layer: true
+plugins:
+  # pythonの依存ライブラリの利用のため
+  - serverless-python-requirements
