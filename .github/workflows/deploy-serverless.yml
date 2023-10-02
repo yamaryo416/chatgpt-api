@@ -31,6 +31,8 @@ jobs:
         run: npx serverless config credentials --provider aws --key ${{ secrets.AWS_ACCESS_KEY_ID }} --secret ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: serverless install
         run: npm i -g serverless
+      - name: serverless python requirements install
+        run: serverless plugin install -n serverless-python-requirements
       - name: serverless deploy
         run: serverless deploy
       # - name: serverless install
