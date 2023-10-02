@@ -1,8 +1,8 @@
 {
+  "volta": {
+    "node": "18.0.0"
+  },
   "dependencies": {
     "serverless": "^3.35.2"
-  },
-  "devDependencies": {
-    "serverless-python-requirements": "^6.0.0"
   }
 }
